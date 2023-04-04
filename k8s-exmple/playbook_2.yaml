@@ -1,0 +1,44 @@
+# ansible/playbook.yml
+
+- name: Install Docker
+  hosts: kubernetes_nodes
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Add Docker GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker APT repository
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable
+        state: present
+
+    - name: Install Docker
+      apt:
+        name: docker-ce
+        state: present
+
+- name: Install Kubernetes
+  hosts: kubernetes_nodes
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Add Kubernetes GPG key
+      apt_key:
+        url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+        state: present
+
+    - name: Add Kubernetes APT repository
+      apt_repository:
+        repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
+        state: present
+
+    - name: Install Kubernetes packages
+      apt:
+        name:
+          - kubelet
+          - kubeadm
+          - kubectl
+        state: present

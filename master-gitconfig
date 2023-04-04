@@ -1,0 +1,9 @@
+[user]
+	name = dvir gross
+	email = dvirgross2000@gmail.com
+[init]
+	defaultBranch = main
+[alias]
+	lc = log-compact
+[log-compact]
+	defaults = --all --graph --decorate
